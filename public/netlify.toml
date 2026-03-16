@@ -1,8 +1,0 @@
-[build]
-  publish = "."
-  command = ""
-
-[[redirects]]
-  from = "/*"
-  to = "/:splat"
-  status = 200

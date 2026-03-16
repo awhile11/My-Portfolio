@@ -2,9 +2,18 @@
 //  RADIAL NAV — nav.js
 // ═══════════════════════════════
 
-// Work out root path so links work from any page depth on Netlify or local
-const isInPages = window.location.pathname.includes('/src/pages/');
-const ROOT = isInPages ? '../../' : '';
+// Dynamically resolve the root of the site regardless of hosting
+function getRootPath() {
+  const path = window.location.pathname;
+  // Count how many directories deep we are
+  const parts = path.split('/').filter(p => p.length > 0 && p.includes('.html') === false);
+  // If we're in /src/pages/ we need to go up 2 levels
+  if (path.includes('/src/pages/')) {
+    return '../../';
+  }
+  return './';
+}
+const ROOT = getRootPath();
 
 const pages = [
   {
