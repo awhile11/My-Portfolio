@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Resume — Lehlohonolo Basaya</title>
+  <link rel="stylesheet" href="/src/css/global.css"/>
+  <style>
+
+    .page-wrap {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      position: relative;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    /* ── LEFT ── */
+    .content {
+      padding: 4rem 4rem 5rem 5rem;
+      position: relative;
+      overflow-y: auto;
+    }
+
+    .orb { position: absolute; border-radius: 50%; pointer-events: none; filter: blur(90px); }
+    .orb1 {
+      width: 420px; height: 420px;
+      background: radial-gradient(circle, rgba(251,191,36,0.08) 0%, transparent 70%);
+      top: -80px; left: -60px;
+      animation: orbFloat 9s ease-in-out infinite;
+    }
+    .orb2 {
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(0,60,160,0.14) 0%, transparent 70%);
+      bottom: 60px; right: 40px;
+      animation: orbFloat 12s ease-in-out infinite reverse;
+    }
+    @keyframes orbFloat {
+      0%,100% { transform: translateY(0) scale(1); }
+      50%      { transform: translateY(-28px) scale(1.04); }
+    }
+
+    .corner-tl {
+      position: absolute; top: 1.8rem; left: 1.8rem;
+      width: 48px; height: 48px;
+      border-top: 1px solid rgba(0,245,255,0.2);
+      border-left: 1px solid rgba(0,245,255,0.2);
+      pointer-events: none;
+    }
+    .corner-bl {
+      position: absolute; bottom: 1.8rem; left: 1.8rem;
+      width: 48px; height: 48px;
+      border-bottom: 1px solid rgba(0,245,255,0.2);
+      border-left: 1px solid rgba(0,245,255,0.2);
+      pointer-events: none;
+    }
+
+    .back-link {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-size: 0.65rem; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--muted); text-decoration: none;
+      margin-bottom: 2.5rem;
+      transition: color 0.2s; animation: fadeUp 0.5s ease both; cursor: none;
+    }
+    .back-link:hover { color: var(--cyan); }
+    .back-link svg { transition: transform 0.2s; }
+    .back-link:hover svg { transform: translateX(-4px); }
+
+    /* ── HEADER AREA ── */
+    .resume-header {
+      margin-bottom: 2.5rem;
+      animation: fadeUp 0.6s 0.05s ease both;
+    }
+    .section-tag {
+      font-size: 0.62rem; letter-spacing: 3.5px;
+      text-transform: uppercase; color: var(--cyan);
+      display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.8rem;
+    }
+    .section-tag::before {
+      content: ''; display: block; width: 26px; height: 1px;
+      background: var(--cyan); box-shadow: 0 0 8px var(--cyan);
+    }
+    .page-title {
+      font-family: var(--font-head);
+      font-size: clamp(2.4rem, 4vw, 3.8rem);
+      font-weight: 800; letter-spacing: -2px; line-height: 1;
+      color: var(--text); margin-bottom: 1.2rem;
+    }
+    .page-title .outline {
+      -webkit-text-stroke: 2px var(--cyan); color: transparent;
+      filter: drop-shadow(0 0 18px rgba(0,245,255,0.28));
+    }
+
+    /* Name card */
+    .name-card {
+      background: var(--dark2);
+      border: 1px solid rgba(0,245,255,0.1);
+      border-radius: 4px;
+      padding: 1.4rem 1.6rem;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 1rem;
+      position: relative; overflow: hidden;
+    }
+    .name-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--cyan), #fbbf24);
+    }
+    .name-main {}
+    .name-big {
+      font-family: var(--font-head);
+      font-size: 1.6rem; font-weight: 800;
+      letter-spacing: -0.5px; color: var(--text);
+      margin-bottom: 0.4rem;
+    }
+    .name-contacts {
+      display: flex; flex-wrap: wrap; gap: 1rem;
+    }
+    .name-contact-item {
+      display: flex; align-items: center; gap: 0.4rem;
+      font-size: 0.72rem; color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s; cursor: none;
+    }
+    .name-contact-item:hover { color: var(--cyan); }
+    .name-contact-item svg { flex-shrink: 0; color: var(--cyan); }
+
+    .download-btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.68rem; letter-spacing: 1.5px; text-transform: uppercase;
+      color: var(--dark); background: var(--cyan);
+      padding: 0.65rem 1.3rem; border: none;
+      cursor: none; font-weight: 700;
+      clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+      transition: box-shadow 0.2s, transform 0.2s;
+      box-shadow: 0 0 20px rgba(0,245,255,0.25);
+      text-decoration: none; white-space: nowrap;
+    }
+    .download-btn:hover { transform: translateY(-2px); box-shadow: 0 0 36px rgba(0,245,255,0.45); }
+
+    /* ── SECTION BLOCKS ── */
+    .resume-body {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .r-card {
+      background: var(--dark2);
+      border: 1px solid rgba(0,245,255,0.08);
+      border-radius: 4px;
+      padding: 1.5rem 1.6rem;
+      position: relative; overflow: hidden;
+      animation: fadeUp 0.6s ease both;
+      transition: border-color 0.3s;
+    }
+    .r-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0;
+      width: 3px; height: 0;
+      transition: height 0.4s ease;
+    }
+    .r-card:hover { border-color: rgba(0,245,255,0.16); }
+    .r-card:hover::before { height: 100%; }
+
+    .r-card.c-yellow::before { background: #fbbf24; box-shadow: 0 0 10px #fbbf24; }
+    .r-card.c-cyan::before   { background: var(--cyan); box-shadow: 0 0 10px var(--cyan); }
+    .r-card.c-purple::before { background: #a78bfa; box-shadow: 0 0 10px #a78bfa; }
+    .r-card.c-green::before  { background: #34d399; box-shadow: 0 0 10px #34d399; }
+    .r-card.c-orange::before { background: #f97316; box-shadow: 0 0 10px #f97316; }
+    .r-card.c-pink::before   { background: #f472b6; box-shadow: 0 0 10px #f472b6; }
+
+    /* animation delays */
+    .r-card:nth-child(1) { animation-delay: 0.08s; }
+    .r-card:nth-child(2) { animation-delay: 0.14s; }
+    .r-card:nth-child(3) { animation-delay: 0.20s; }
+    .r-card:nth-child(4) { animation-delay: 0.26s; }
+    .r-card:nth-child(5) { animation-delay: 0.32s; }
+    .r-card:nth-child(6) { animation-delay: 0.38s; }
+    .r-card:nth-child(7) { animation-delay: 0.44s; }
+
+    .r-card-title {
+      font-size: 0.6rem; letter-spacing: 3px;
+      text-transform: uppercase; color: var(--cyan);
+      margin-bottom: 1.2rem; opacity: 0.75;
+    }
+
+    /* Profile */
+    .profile-text {
+      font-size: 0.85rem; color: var(--muted);
+      line-height: 1.95;
+      padding-left: 1rem;
+      border-left: 2px solid rgba(0,245,255,0.18);
+    }
+
+    /* Education timeline */
+    .edu-list { display: flex; flex-direction: column; gap: 0; }
+    .edu-item {
+      display: flex; gap: 1.2rem;
+      padding: 1rem 0;
+      border-bottom: 1px solid rgba(0,245,255,0.05);
+    }
+    .edu-item:first-child { padding-top: 0; }
+    .edu-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .edu-tl { display: flex; flex-direction: column; align-items: center; padding-top: 4px; flex-shrink: 0; }
+    .edu-dot {
+      width: 10px; height: 10px; border-radius: 50%;
+      border: 1.5px solid var(--cyan); background: var(--dark);
+      box-shadow: 0 0 8px rgba(0,245,255,0.3);
+    }
+    .edu-dot.dim { border-color: var(--muted); box-shadow: none; }
+    .edu-line { width: 1px; flex: 1; background: rgba(0,245,255,0.1); margin-top: 5px; min-height: 20px; }
+    .edu-item:last-child .edu-line { display: none; }
+    .edu-school { font-family: var(--font-head); font-size: 0.95rem; font-weight: 700; color: var(--text); margin-bottom: 0.2rem; }
+    .edu-qual { font-size: 0.78rem; color: var(--cyan); margin-bottom: 0.5rem; }
+    .edu-qual.dim { color: var(--muted); }
+    .edu-modules { margin-top: 0.5rem; }
+    .edu-modules-label { font-size: 0.58rem; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 0.5rem; }
+    .module-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .module-tag {
+      font-size: 0.6rem; letter-spacing: 1px; text-transform: uppercase;
+      padding: 0.25rem 0.6rem;
+      border: 1px solid rgba(0,245,255,0.14);
+      color: var(--muted); background: rgba(0,245,255,0.03);
+      border-radius: 2px;
+    }
+
+    /* Skills two-col */
+    .skills-two {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.2rem;
+    }
+    .skill-group {}
+    .skill-group-label {
+      font-size: 0.6rem; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--cyan); margin-bottom: 0.5rem; opacity: 0.75;
+    }
+    .skill-group-items {
+      font-size: 0.78rem; color: var(--muted); line-height: 1.8;
+    }
+
+    /* Soft skills + strengths tags */
+    .tag-cloud { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .soft-tag {
+      font-size: 0.68rem; color: var(--text);
+      padding: 0.32rem 0.8rem;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.03);
+      border-radius: 3px;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .soft-tag:hover { border-color: rgba(0,245,255,0.2); color: var(--cyan); }
+
+    /* Strength items */
+    .strength-list { display: flex; flex-direction: column; gap: 0.5rem; }
+    .strength-item {
+      display: flex; align-items: center; gap: 0.7rem;
+      font-size: 0.8rem; color: var(--muted);
+    }
+    .strength-item::before {
+      content: '';
+      width: 5px; height: 5px; border-radius: 50%;
+      background: var(--cyan);
+      box-shadow: 0 0 6px var(--cyan);
+      flex-shrink: 0;
+    }
+
+    /* Experience */
+    .exp-header {
+      display: flex; align-items: flex-start;
+      justify-content: space-between; gap: 1rem;
+      margin-bottom: 0.8rem; flex-wrap: wrap;
+    }
+    .exp-title { font-family: var(--font-head); font-size: 1rem; font-weight: 700; color: var(--text); margin-bottom: 0.2rem; }
+    .exp-org { font-size: 0.78rem; color: var(--cyan); }
+    .exp-duration {
+      font-size: 0.62rem; letter-spacing: 1.5px; text-transform: uppercase;
+      color: var(--muted);
+      border: 1px solid rgba(0,245,255,0.15);
+      padding: 0.25rem 0.7rem; border-radius: 2px;
+      white-space: nowrap;
+    }
+    .exp-list { display: flex; flex-direction: column; gap: 0.45rem; margin-top: 0.8rem; }
+    .exp-item {
+      display: flex; align-items: flex-start; gap: 0.7rem;
+      font-size: 0.8rem; color: var(--muted); line-height: 1.6;
+    }
+    .exp-item::before {
+      content: '→'; color: var(--cyan); font-size: 0.7rem;
+      margin-top: 0.1rem; flex-shrink: 0;
+    }
+
+    /* Project cards inside resume */
+    .proj-list { display: flex; flex-direction: column; gap: 1.1rem; }
+    .proj-item {
+      border: 1px solid rgba(0,245,255,0.07);
+      border-radius: 4px; padding: 1.1rem 1.2rem;
+      background: rgba(2,11,24,0.4);
+      transition: border-color 0.2s;
+    }
+    .proj-item:hover { border-color: rgba(0,245,255,0.18); }
+    .proj-item-header {
+      display: flex; align-items: flex-start;
+      justify-content: space-between; gap: 0.8rem;
+      margin-bottom: 0.5rem; flex-wrap: wrap;
+    }
+    .proj-item-name { font-family: var(--font-head); font-size: 0.95rem; font-weight: 700; color: var(--text); }
+    .proj-item-badge {
+      font-size: 0.58rem; letter-spacing: 1.5px; text-transform: uppercase;
+      padding: 0.2rem 0.6rem; border-radius: 2px; border: 1px solid; white-space: nowrap;
+    }
+    .badge-team   { color: #a78bfa; border-color: rgba(167,139,250,0.3); background: rgba(167,139,250,0.06); }
+    .badge-solo   { color: #00f5ff; border-color: rgba(0,245,255,0.3);   background: rgba(0,245,255,0.06); }
+    .badge-wip    { color: #fbbf24; border-color: rgba(251,191,36,0.3);  background: rgba(251,191,36,0.06); }
+    .proj-item-desc { font-size: 0.78rem; color: var(--muted); line-height: 1.7; margin-bottom: 0.6rem; }
+    .proj-item-roles { display: flex; flex-direction: column; gap: 0.3rem; }
+    .proj-role {
+      display: flex; align-items: flex-start; gap: 0.6rem;
+      font-size: 0.76rem; color: var(--muted); line-height: 1.5;
+    }
+    .proj-role::before { content: '·'; color: var(--cyan); flex-shrink: 0; font-size: 1rem; line-height: 1.2; }
+
+    /* ── RIGHT: NAV PANEL ── */
+    .nav-panel {
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
+      border-left: 1px solid rgba(0,245,255,0.06);
+      background: rgba(6,21,40,0.35);
+      backdrop-filter: blur(8px);
+    }
+    .nav-panel::before {
+      content: ''; position: absolute; top: 10%; bottom: 10%; left: 0; width: 1px;
+      background: linear-gradient(to bottom, transparent, rgba(0,245,255,0.15), transparent);
+    }
+    .nav-scene { position: relative; width: 340px; height: 340px; animation: fadeIn 0.8s 0.4s ease both; }
+    .home-btn {
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%,-50%);
+      width: 82px; height: 82px; border-radius: 50%;
+      border: 1.5px solid rgba(0,245,255,0.4);
+      background: rgba(2,11,24,0.9); backdrop-filter: blur(16px);
+      display: flex; align-items: center; justify-content: center;
+      cursor: none; z-index: 10;
+      transition: border-color 0.25s, box-shadow 0.25s, transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+      box-shadow: 0 0 28px rgba(0,245,255,0.1);
+    }
+    .home-btn:hover { border-color: var(--cyan); box-shadow: 0 0 44px rgba(0,245,255,0.28); }
+    .home-btn.open { transform: translate(-50%,-50%) rotate(20deg); border-color: var(--cyan); box-shadow: 0 0 52px rgba(0,245,255,0.38); }
+    .home-btn svg { color: var(--cyan); }
+    .orbit-ring {
+      position: absolute; top: 50%; left: 50%;
+      width: 284px; height: 284px; margin: -142px 0 0 -142px;
+      border-radius: 50%; border: 1px dashed rgba(0,245,255,0.1);
+      opacity: 0; transform: scale(0.5);
+      transition: opacity 0.4s ease, transform 0.45s cubic-bezier(0.34,1.56,0.64,1);
+      pointer-events: none;
+    }
+    .orbit-ring.visible { opacity: 1; transform: scale(1); }
+    .orbit-icon {
+      position: absolute; top: 50%; left: 50%;
+      width: 70px; height: 70px; margin: -35px 0 0 -35px;
+      border-radius: 50%; border: 1.5px solid rgba(255,255,255,0.08);
+      background: rgba(6,21,40,0.92); backdrop-filter: blur(12px);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 5px; cursor: none; opacity: 0;
+      transform: translate(0,0) scale(0.2);
+      transition: opacity 0.4s cubic-bezier(0.34,1.56,0.64,1), transform 0.4s cubic-bezier(0.34,1.56,0.64,1), border-color 0.2s, box-shadow 0.2s;
+      pointer-events: none; z-index: 9;
+    }
+    .orbit-icon.visible { opacity: 1; pointer-events: auto; }
+    .orbit-icon:hover { transform: translate(var(--tx), var(--ty)) scale(1.14) !important; }
+    .orbit-icon[data-page="about"]:hover    { border-color: var(--color-about);    box-shadow: 0 0 22px rgba(0,245,255,0.3); }
+    .orbit-icon[data-page="projects"]:hover { border-color: var(--color-projects); box-shadow: 0 0 22px rgba(249,115,22,0.3); }
+    .orbit-icon[data-page="skills"]:hover   { border-color: var(--color-skills);   box-shadow: 0 0 22px rgba(167,139,250,0.3); }
+    .orbit-icon[data-page="contact"]:hover  { border-color: var(--color-contact);  box-shadow: 0 0 22px rgba(52,211,153,0.3); }
+    .orbit-icon[data-page="resume"]:hover   { border-color: var(--color-resume);   box-shadow: 0 0 22px rgba(251,191,36,0.3); }
+    .orbit-icon[data-page="cert"]:hover     { border-color: var(--color-cert);     box-shadow: 0 0 22px rgba(244,114,182,0.3); }
+    .orbit-icon .ico { display: flex; align-items: center; justify-content: center; transition: transform 0.2s; }
+    .orbit-icon:hover .ico { transform: scale(1.1); }
+    .orbit-icon .lbl {
+      font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.4px;
+      color: rgba(255,255,255,0.45); text-align: center; white-space: nowrap;
+      opacity: 0; transition: opacity 0.2s 0.28s; line-height: 1;
+    }
+    .orbit-icon.visible .lbl { opacity: 1; }
+    .nav-hint {
+      position: absolute; bottom: -2.2rem; left: 50%; transform: translateX(-50%);
+      font-size: 0.62rem; letter-spacing: 1.8px; text-transform: uppercase;
+      color: var(--muted); opacity: 0.4; white-space: nowrap;
+      animation: fadeIn 1s 0.8s ease both;
+    }
+    .summary-panel {
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%,-50%) scale(0.9);
+      width: 300px; background: rgba(6,21,40,0.97);
+      backdrop-filter: blur(20px); border: 1px solid rgba(0,245,255,0.15);
+      border-radius: 16px; padding: 1.2rem;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.3s ease, transform 0.35s cubic-bezier(0.34,1.56,0.64,1);
+      z-index: 50;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.6), 0 0 40px rgba(0,245,255,0.04);
+    }
+    .summary-panel.visible { opacity: 1; pointer-events: auto; transform: translate(-50%,-50%) scale(1); }
+    .panel-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 0.9rem; padding-bottom: 0.65rem;
+      border-bottom: 1px solid rgba(0,245,255,0.08);
+    }
+    .panel-title { font-family: var(--font-head); font-size: 0.82rem; font-weight: 700; color: var(--cyan); letter-spacing: 1px; text-transform: uppercase; }
+    .panel-close {
+      width: 24px; height: 24px; border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.1); background: transparent;
+      color: var(--muted); font-size: 12px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: none; line-height: 1;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .panel-close:hover { border-color: var(--cyan); color: var(--cyan); }
+    .summary-row {
+      display: flex; align-items: center; gap: 0.75rem;
+      padding: 0.5rem 0.4rem; border-radius: 8px;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+    .summary-row:last-child { border-bottom: none; }
+    .row-icon { width: 30px; height: 30px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .row-text { flex: 1; }
+    .row-name { font-family: var(--font-mono); font-size: 0.7rem; font-weight: 700; color: var(--text); margin-bottom: 1px; letter-spacing: 0.5px; }
+    .row-desc { font-size: 0.67rem; color: var(--muted); line-height: 1.4; }
+
+    @media (max-width: 900px) {
+      .page-wrap { grid-template-columns: 1fr; }
+      .content { padding: 4rem 1.8rem 3rem; }
+      .skills-two { grid-template-columns: 1fr; }
+      .nav-panel { border-left: none; border-top: 1px solid rgba(0,245,255,0.06); padding: 3rem 0 5rem; min-height: 420px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+  <div class="scanline"></div>
+
+  <div class="page-wrap">
+
+    <!-- ═══ LEFT: CONTENT ═══ -->
+    <div class="content">
+      <div class="orb orb1"></div>
+      <div class="orb orb2"></div>
+      <div class="corner-tl"></div>
+      <div class="corner-bl"></div>
+
+      <a href="/index.html" class="back-link">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6"/>
+        </svg>
+        Back to Home
+      </a>
+
+      <!-- Header -->
+      <div class="resume-header">
+        <div class="section-tag">05 // Resume</div>
+        <h1 class="page-title">My <span class="outline">Resume</span></h1>
+
+        <!-- Name + download -->
+        <div class="name-card">
+          <div class="name-main">
+            <div class="name-big">Lehlohonolo Basaya</div>
+            <div class="name-contacts">
+              <a href="/cdn-cgi/l/email-protection#711d05191d1e1918404031161c10181d5f121e1c" class="name-contact-item">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                <span class="__cf_email__" data-cfemail="e18d95898d8e8988d0d0a1868c80888dcf828e8c">[email&#160;protected]</span>
+              </a>
+              <a href="tel:+27658682396" class="name-contact-item">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 11.61 19a19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 3.09 4.18 2 2 0 0 1 5.08 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L9.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                065 868 2396
+              </a>
+            </div>
+          </div>
+          <a href="/src/assets/Lehlohonolo_Basaya_Resume.pdf" download="Lehlohonolo_Basaya_Resume.pdf" class="download-btn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Download PDF
+          </a>
+        </div>
+      </div>
+
+      <div class="resume-body">
+
+        <!-- PROFILE -->
+        <div class="r-card c-cyan">
+          <div class="r-card-title">// Profile</div>
+          <p class="profile-text">
+            Driven and detail-oriented IT graduate with a strong passion for building practical,
+            real-world technology solutions. Experienced in software development, system design,
+            and collaborative project work. Eager to contribute to innovative teams, sharpen
+            technical skills, and grow into a high-impact IT professional in areas such as
+            software engineering, cybersecurity, and data-driven systems.
+          </p>
+        </div>
+
+        <!-- EDUCATION -->
+        <div class="r-card c-yellow">
+          <div class="r-card-title">// Education</div>
+          <div class="edu-list">
+
+            <div class="edu-item">
+              <div class="edu-tl">
+                <div class="edu-dot"></div>
+                <div class="edu-line"></div>
+              </div>
+              <div>
+                <div class="edu-school">Richfield Graduate Institute of Technology</div>
+                <div class="edu-qual">Bachelor of Science in Information Technology</div>
+                <div class="edu-modules">
+                  <div class="edu-modules-label">Key Modules</div>
+                  <div class="module-tags">
+                    <span class="module-tag">Programming</span>
+                    <span class="module-tag">Artificial Intelligence</span>
+                    <span class="module-tag">Computer Networks</span>
+                    <span class="module-tag">Information Systems</span>
+                    <span class="module-tag">Database Management</span>
+                    <span class="module-tag">Cyber Security</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="edu-item">
+              <div class="edu-tl">
+                <div class="edu-dot dim"></div>
+                <div class="edu-line"></div>
+              </div>
+              <div>
+                <div class="edu-school">Holy Trinity Secondary School</div>
+                <div class="edu-qual dim">Matric Certificate</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- KEY SKILLS -->
+        <div class="r-card c-purple">
+          <div class="r-card-title">// Key Skills</div>
+          <div class="skills-two">
+            <div class="skill-group">
+              <div class="skill-group-label">Programming</div>
+              <div class="skill-group-items">C#, C++, Python, Java, PHP</div>
+            </div>
+            <div class="skill-group">
+              <div class="skill-group-label">Web Technologies</div>
+              <div class="skill-group-items">HTML, CSS, JavaScript</div>
+            </div>
+            <div class="skill-group">
+              <div class="skill-group-label">Databases</div>
+              <div class="skill-group-items">MySQL, SQL Server, Firebase</div>
+            </div>
+            <div class="skill-group">
+              <div class="skill-group-label">Tools &amp; Platforms</div>
+              <div class="skill-group-items">Visual Studio, GitHub, Microsoft Office, Figma</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SOFT SKILLS -->
+        <div class="r-card c-green">
+          <div class="r-card-title">// Soft Skills</div>
+          <div class="tag-cloud">
+            <span class="soft-tag">Problem Solving</span>
+            <span class="soft-tag">Teamwork</span>
+            <span class="soft-tag">Communication</span>
+            <span class="soft-tag">Time Management</span>
+            <span class="soft-tag">Adaptability</span>
+          </div>
+        </div>
+
+        <!-- PERSONAL STRENGTHS -->
+        <div class="r-card c-pink">
+          <div class="r-card-title">// Personal Strengths</div>
+          <div class="strength-list">
+            <div class="strength-item">Strong work ethic and self-discipline</div>
+            <div class="strength-item">Reliable and responsible</div>
+            <div class="strength-item">Respectful and professional</div>
+            <div class="strength-item">Willing to learn and improve</div>
+            <div class="strength-item">Good with people and communication</div>
+            <div class="strength-item">Able to handle pressure and deadlines</div>
+          </div>
+        </div>
+
+        <!-- EXPERIENCE -->
+        <div class="r-card c-yellow">
+          <div class="r-card-title">// Experience</div>
+          <div class="exp-header">
+            <div>
+              <div class="exp-title">Work Integrated Learning (WIL)</div>
+              <div class="exp-org">Tshwane Municipality — IT Department</div>
+            </div>
+            <span class="exp-duration">3 Months</span>
+          </div>
+          <div class="exp-list">
+            <div class="exp-item">Assisted with basic IT support and system troubleshooting.</div>
+            <div class="exp-item">Gained hands-on experience in real-world IT operations within a government environment.</div>
+            <div class="exp-item">Supported users with technical issues and learned professional IT workflows.</div>
+            <div class="exp-item">Improved understanding of enterprise systems, documentation, and IT service processes.</div>
+          </div>
+        </div>
+
+        <!-- PROJECTS -->
+        <div class="r-card c-orange">
+          <div class="r-card-title">// Projects</div>
+          <div class="proj-list">
+
+            <!-- NeuroGrade -->
+            <div class="proj-item">
+              <div class="proj-item-header">
+                <div class="proj-item-name">NeuroGrade — Auto-Grading System</div>
+                <span class="proj-item-badge badge-team">Team Lead · 12 Members</span>
+              </div>
+              <p class="proj-item-desc">
+                An intelligent auto-grading platform designed to grade both short and long-form exam
+                answers for learning institutions using AI.
+              </p>
+              <div class="proj-item-roles">
+                <div class="proj-role">Co-team leader responsible for project scheduling and task allocation.</div>
+                <div class="proj-role">Led requirement specification (SRS) and system planning.</div>
+                <div class="proj-role">Coordinated collaboration between development and documentation teams.</div>
+                <div class="proj-role">Contributed to system design and overall project architecture.</div>
+              </div>
+            </div>
+
+            <!-- PicShift -->
+            <div class="proj-item">
+              <div class="proj-item-header">
+                <div class="proj-item-name">PicShift — Puzzle Game</div>
+                <span class="proj-item-badge badge-solo">Solo · Live</span>
+              </div>
+              <p class="proj-item-desc">
+                A fun browser-based puzzle game built to give people a quick mental break.
+                Built and deployed independently on Netlify.
+              </p>
+              <div class="proj-item-roles">
+                <div class="proj-role">Designed and developed the full game logic, UI and interactions from scratch.</div>
+                <div class="proj-role">Deployed and maintained at pic-shift.netlify.app.</div>
+              </div>
+            </div>
+
+            <!-- LifeLedger -->
+            <div class="proj-item">
+              <div class="proj-item-header">
+                <div class="proj-item-name">LifeLedger — Life Management Platform</div>
+                <span class="proj-item-badge badge-wip">Solo · In Progress</span>
+              </div>
+              <p class="proj-item-desc">
+                A personal life management platform helping people track and improve how they
+                use their time, money and energy in everyday life.
+              </p>
+              <div class="proj-item-roles">
+                <div class="proj-role">Sole developer — designing, building and iterating on the full platform.</div>
+                <div class="proj-role">Live preview available at lifeleadger.netlify.app.</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div><!-- end resume-body -->
+    </div><!-- end content -->
+
+    <!-- ═══ RIGHT: NAV PANEL ═══ -->
+    <div class="nav-panel">
+      <div class="nav-scene" id="navScene">
+        <div class="orbit-ring" id="ring"></div>
+        <button class="home-btn" id="homeBtn" aria-label="Navigation menu">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="1.5"
+               stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/>
+            <path d="M9 21V12h6v9"/>
+          </svg>
+        </button>
+        <div class="summary-panel" id="summaryPanel">
+          <div class="panel-header">
+            <span class="panel-title">// Quick Nav</span>
+            <button class="panel-close" id="closePanel">✕</button>
+          </div>
+          <div id="summaryRows"></div>
+        </div>
+        <div class="nav-hint">Hover to explore · Click for overview</div>
+      </div>
+    </div>
+
+  </div><!-- end page-wrap -->
+
+  <script type="module" src="/src/js/nav.js"></script>
+</body>
+</html>
