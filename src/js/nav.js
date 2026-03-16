@@ -2,9 +2,9 @@
 //  RADIAL NAV — nav.js
 // ═══════════════════════════════
 
-// Work out root path so links work from any page depth
+// Work out root path so links work from any page depth on Netlify or local
 const isInPages = window.location.pathname.includes('/src/pages/');
-const ROOT = isInPages ? '../../' : './';
+const ROOT = isInPages ? '../../' : '';
 
 const pages = [
   {
